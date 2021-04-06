@@ -1,0 +1,105 @@
+//*****************************************************************
+//ALGORITMO:  ARBOL DE BUSQUEDA BINARIO
+//Autor: Victor Hugo Rios Rebollar
+//Escuela Superior de Computo-IPN
+//Fecha: 25/03/2021
+//Compilacion: "gcc abb.c tiempo.c -o abb"(LINUX)
+//Ejecucion: "./abb n"(LINUX)
+//Ejecucion shell: ./abb.sh(LINUX)
+//*****************************************************************
+
+//*****************************************************************
+//LIBRERIAS INCLUIDAS
+//*****************************************************************
+#include <stdio.h>
+#include <stdlib.h>
+//*****************************************************************
+//DEFINICION DE CONSTANTES DEL PROGRAMA
+#define REGISTROS 10000000
+#define LIMITE 50 // limite de caracteres leidos por linea del archivo de 10 millones de numeros
+
+//*****************************************************************
+//*****************************************************************
+//DEFINICION DE ESTRUCTURAS DEL PROGRAMA
+struct node {
+    int key;
+    struct node *left, *right;
+};
+//*****************************************************************
+//*****************************************************************
+//DEFINICION DE FUNCIONES DEL PROGRAMA
+// A utility function to create a new BST node
+struct node* newNode(int item)
+{
+    struct node* temp
+        = (struct node*)malloc(sizeof(struct node));
+    temp->key = item;
+    temp->left = temp->right = NULL;
+    return temp;
+}
+ 
+// A utility function to do inorder traversal of BST
+void inorder(struct node* root, int numero)
+{
+    if (root != NULL) {
+        inorder(root->left,numero);
+        if(numero==root->key){
+        	printf("Encontrado");
+		}
+		printf("%d",root->key);
+        inorder(root->right,numero);
+    }
+}
+ 
+/* A utility function to insert
+   a new node with given key in
+ * BST */
+struct node* insert(struct node* node, int key)
+{
+    /* If the tree is empty, return a new node */
+    if (node == NULL)
+        return newNode(key);
+ 
+    /* Otherwise, recur down the tree */
+    if (key < node->key)
+        node->left = insert(node->left, key);
+    else if (key > node->key)
+        node->right = insert(node->right, key);
+ 
+    /* return the (unchanged) node pointer */
+    return node;
+}
+ 
+int main()
+{
+	double utime0, stime0, wtime0, utime1, stime1, wtime1;  //Variables para medicion de tiempos
+	FILE* fichero; 										    //puntero a fichero
+	char cadena[LIMITE];                                    //cadena auxiiar para leer linea a linea los registros del archivo
+	fichero = fopen("numeros10millones.txt", "rt");         //apertura del archivo de 10 millones
+	int arreglo2[20] = {322486, 14700764, 3128036, 6337399, 61396, 10393545, 2147445644, 1295390003, 450057883, 187645041, 1980098116, 152503, 5000, 1493283650, 214826, 1843349527, 1360839354, 2109248666 , 2147470852, 0};
+    struct node* root = NULL;
+    root = insert(root, 50);
+    insert(root, 30);
+    insert(root, 20);
+    insert(root, 40);
+    insert(root, 70);
+    insert(root, 60);
+    insert(root, 80);
+ 
+ 	//******************************************************************
+	//Iniciar el conteo del tiempo para las evaluaciones de rendimiento
+	//******************************************************************
+	uswtime(&utime0, &stime0, &wtime0);
+    //******************************************************************
+	//Inicio del recorrido en orden
+	//******************************************************************
+    inorder(root,40);
+ 	//******************************************************************
+	//Fin de recorrido en orden
+	
+	//******************************************************************
+	//Evaluar los tiempos de ejecucion
+	//******************************************************************
+    uswtime(&utime1, &stime1, &wtime1);	
+    return 0;
+}
