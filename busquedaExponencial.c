@@ -31,7 +31,7 @@ int main(int argc, char *argv[]){
     double utime0, stime0, wtime0, utime1, stime1, wtime1;  //Variables para medicion de tiempos
 	FILE* fichero; 										    //puntero a fichero
 	char cadena[LIMITE];                                    //cadena auxiiar para leer linea a linea los registros del archivo
-	fichero = fopen("numeros10millones.txt", "rt");         //apertura del archivo de 10 millones
+	fichero = fopen("10millones.txt", "rt");         //apertura del archivo de 10 millones
 	int *numeros;  											//variable apuntador para reservar memoria
 	int n;
 	int arreglo2[20] = {322486, 14700764, 3128036, 6337399, 61396, 10393545, 2147445644, 1295390003, 450057883, 187645041, 1980098116, 152503, 5000, 1493283650, 214826, 1843349527, 1360839354, 2109248666 , 2147470852, 0};
