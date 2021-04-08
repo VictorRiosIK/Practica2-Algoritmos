@@ -70,8 +70,8 @@ int main(int argc, char *argv[]){
 	//Algoritmo
 	//******************************************************************
 
-    for(int i=0;i<n;i++){
-        int result=busquedaExponencial(arreglo2,n,*(numeros+i));
+    for(int i=0;i<20;i++){
+        int result=busquedaExponencial(numeros,n,arreglo2[i]);
 			(result==-1) ? : printf("Elemento encontrado en la posición %d\n", i);
     }
 
