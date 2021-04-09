@@ -72,10 +72,27 @@ int main(int argc, char *argv[]){
 
     for(int i=0;i<20;i++){
         int result=busquedaExponencial(numeros,n,arreglo2[i]);
-			(result==-1) ? : printf("Elemento encontrado en la posición %d\n", i);
+			if(result==-1){
+        printf("no encontrado\n");
+    }else{
+    printf("Elemento encontrado en la posición %d", result);
+    uswtime(&utime1, &stime1, &wtime1);
+
+    printf("\n");
+    printf("real (Tiempo total)  %.10f s\n", wtime1 - wtime0);
+    printf("user (Tiempo de procesamiento en CPU) %.10f s\n", utime1 - utime0);
+    printf("sys (Tiempo en acciÃ³nes de E/S)  %.10f s\n", stime1 - stime0);
+    printf("CPU/Wall   %.10f %% \n", 100.0 * (utime1 - utime0 + stime1 - stime0) / (wtime1 - wtime0));
+    printf("\n");
+
+    printf("\n");
+    printf("real (Tiempo total)  %.10e s\n", wtime1 - wtime0);
+    printf("user (Tiempo de procesamiento en CPU) %.10e s\n", utime1 - utime0);
+    printf("sys (Tiempo en acciÃ³nes de E/S)  %.10e s\n", stime1 - stime0);
+    printf("CPU/Wall   %.10f %% \n", 100.0 * (utime1 - utime0 + stime1 - stime0) / (wtime1 - wtime0));
+    printf("\n");
     }
-
-
+    }
 
 	//******************************************************************
 	//Fin de algoritmo
