@@ -25,8 +25,10 @@
 //funcion para buscar, regresa 0 si no lo encontro, 1 si si lo encontro
 int buscar (int arreglo[], int num, int n){ //recibe arreglo 
 	for(int i=0; i<n; i++){
-		if(arreglo[i]==num)
+	//printf("%d",arreglo[i]);
+		if(arreglo[i]==num){
 			return num;
+			}
 	}
 }
 
@@ -37,7 +39,7 @@ int main(int argc, char *argv[]){
 	char cadena[LIMITE];                                    //cadena auxiiar para leer linea a linea los registros del archivo
 	fichero = fopen("numeros10millones.txt", "rt");         //apertura del archivo de 10 millones
 	int *numeros;  											//variable apuntador para reservar memoria
-	int n;
+	int n,i;
 	int arreglo2[20] = {322486, 14700764, 3128036, 6337399, 61396, 10393545, 2147445644, 1295390003, 450057883, 187645041, 1980098116, 152503, 5000, 1493283650, 214826, 1843349527, 1360839354, 2109248666 , 2147470852, 0};
 	int impr;
 	//******************************************************************
@@ -74,8 +76,27 @@ int main(int argc, char *argv[]){
 	//******************************************************************
 	for(i=0; i<20; i++){
         impr = buscar(numeros, arreglo2[i], n);		
-		if (impr==arreglo2[i])	
-			printf("%d\n" , impr);
+		if (impr==arreglo2[i]){
+			printf("Encontrado: %d\n",impr);
+			
+			uswtime(&utime1, &stime1, &wtime1);	
+			//Calculo del tiempo de ejecucion del programa
+			printf("\n");
+			printf("real (Tiempo total)  %.10f s\n", wtime1 - wtime0);
+			printf("user (Tiempo de procesamiento en CPU) %.10f s\n", utime1 - utime0);
+			printf("sys (Tiempo en acciÃ³nes de E/S)  %.10f s\n", stime1 - stime0);
+			printf("CPU/Wall   %.10f %% \n", 100.0 * (utime1 - utime0 + stime1 - stime0) / (wtime1 - wtime0));
+			printf("\n");
+
+			//Mostrar los tiempos en formato exponecial
+			printf("\n");
+			printf("real (Tiempo total)  %.10e s\n", wtime1 - wtime0);
+			printf("user (Tiempo de procesamiento en CPU) %.10e s\n", utime1 - utime0);
+			printf("sys (Tiempo en acciÃ³nes de E/S)  %.10e s\n", stime1 - stime0);
+			printf("CPU/Wall   %.10f %% \n", 100.0 * (utime1 - utime0 + stime1 - stime0) / (wtime1 - wtime0));
+			printf("\n");
+		}
+	
 	}	
 	//******************************************************************
 	//Fin de algoritmo
@@ -83,23 +104,7 @@ int main(int argc, char *argv[]){
 	//******************************************************************
 	//Evaluar los tiempos de ejecucion
 	//******************************************************************
-    uswtime(&utime1, &stime1, &wtime1);	
-
-	//Calculo del tiempo de ejecucion del programa
-	printf("\n");
-	printf("real (Tiempo total)  %.10f s\n", wtime1 - wtime0);
-	printf("user (Tiempo de procesamiento en CPU) %.10f s\n", utime1 - utime0);
-	printf("sys (Tiempo en acciÃ³nes de E/S)  %.10f s\n", stime1 - stime0);
-	printf("CPU/Wall   %.10f %% \n", 100.0 * (utime1 - utime0 + stime1 - stime0) / (wtime1 - wtime0));
-	printf("\n");
-
-	//Mostrar los tiempos en formato exponecial
-	printf("\n");
-	printf("real (Tiempo total)  %.10e s\n", wtime1 - wtime0);
-	printf("user (Tiempo de procesamiento en CPU) %.10e s\n", utime1 - utime0);
-	printf("sys (Tiempo en acciÃ³nes de E/S)  %.10e s\n", stime1 - stime0);
-	printf("CPU/Wall   %.10f %% \n", 100.0 * (utime1 - utime0 + stime1 - stime0) / (wtime1 - wtime0));
-	printf("\n");
+    
 	//******************************************************************
 	
 	//Terminar programa normalmente
