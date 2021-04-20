@@ -76,18 +76,22 @@ int binarySearch(int arr[], int l, int r, int x)
 {
     while (l <= r) {
         int m = l + (r - l) / 2;
-  
+  	//printf("M: %d\n",m);
         // Check if x is present at mid
-        if (arr[m] == x)
+        
+        if (arr[m] == x){
             return m;
+            }
   
         // If x greater, ignore left half
-        if (arr[m] < x)
+        if (arr[m] < x){
             l = m + 1;
+            }
   
         // If x is smaller, ignore right half
-        else
+        else{
             r = m - 1;
+            }
     }
   
     // if we reach here, then element was
@@ -123,15 +127,17 @@ int main(int argc, char *argv[])
 		exit(1);
 		
     
-    nMedio = (sizeof(numeros) /2);
+    	nMedio = (n/2);
  
  	//Para poder ordenar el arreglo de n numeros que se requiere imprimimos inorden el arbol y vamos añadiendo a un arreglo extra 
  	
  	inorder(root);
  	
- 	for(i=0;i<n;i++){
- 		printf("%d",i);
-	}
+ 	
+ 	//Comprobar ordenamiento de los 10millones por medio del arbol
+ 	//for(i=0;i<n;i++){
+ 	//	printf("%d\n",*(arreglo+i));
+	//}
  	
  	//******************************************************************
 	//Iniciar el conteo del tiempo para las evaluaciones de rendimiento
@@ -143,9 +149,10 @@ int main(int argc, char *argv[])
 	//Inicio del algoritmo
 	//******************************************************************
     
-    for(i=0;i<n;i++){
-    	int result = binarySearch(arreglo, 0, nMedio - 1,*(arreglo+i));
-    	(result == -1) ? printf("Elemento no encontrado"): printf("Elemento encontrado en la posicion %d",result);
+    	for(i=0;i<20;i++){
+    	int result = binarySearch(arreglo, 0, nMedio-1,*(arreglo2+i));
+    	(result == -1) ? printf("Elemento no encontrado\n"): printf("Elemento encontrado en la posicion %d\n",result);
+		
 	}
  	//******************************************************************
 	//Fin del algoritmo
