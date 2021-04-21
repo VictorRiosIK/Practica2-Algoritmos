@@ -17,7 +17,9 @@
 //DEFINICION DE CONSTANTES DEL PROGRAMA
 #define REGISTROS 10000000
 #define LIMITE 50 // limite de caracteres leidos por linea del archivo de 10 millones de numeros
-
+//DEFINICION DE VARIABLES GLOBALES
+int *numeros,*arreglo;  //variable apuntador para reservar memoria
+static int contadorPosicion = 0; //almcaena la posicion donde se almacenara el dato dentro del arreglo ordenado
 //*****************************************************************
 //*****************************************************************
 //DEFINICION DE ESTRUCTURAS DEL PROGRAMA
@@ -43,14 +45,31 @@ void inorder(struct node* root, int numero)
 {
     if (root != NULL) {
         inorder(root->left,numero);
-        if(numero==root->key){
+        /*if(numero==root->key){
         	printf("Encontrado");
-		}
-		printf("%d",root->key);
+		}*/
+		printf("%d\n",root->key);
         inorder(root->right,numero);
     }
 }
- 
+int buscar(struct node* root,int valor){
+	
+	if(root !=NULL){
+		while(root!= NULL && valor!= root->key){
+			if(valor<root->key){
+				root=root->left;
+			}else{
+				root=root->right;
+			}
+		}		
+	}
+	
+	if(root!= NULL){
+		return 1;
+	}else{
+		return 0;
+	}
+}
 /* A utility function to insert
    a new node with given key in
  * BST */
@@ -70,36 +89,84 @@ struct node* insert(struct node* node, int key)
     return node;
 }
  
-int main()
+int main(int argc, char *argv[])
 {
+	int n,i;
 	double utime0, stime0, wtime0, utime1, stime1, wtime1;  //Variables para medicion de tiempos
 	FILE* fichero; 										    //puntero a fichero
 	char cadena[LIMITE];                                    //cadena auxiiar para leer linea a linea los registros del archivo
 	fichero = fopen("numeros10millones.txt", "rt");         //apertura del archivo de 10 millones
-	int arreglo2[20] = {322486, 14700764, 3128036, 6337399, 61396, 10393545, 2147445644, 1295390003, 450057883, 187645041, 1980098116, 152503, 5000, 1493283650, 214826, 1843349527, 1360839354, 2109248666 , 2147470852, 0};
+	int numerosABuscar[20] = {322486, 14700764, 3128036, 6337399, 61396, 10393545, 2147445644, 1295390003, 450057883, 187645041, 1980098116, 152503, 5000, 1493283650, 214826, 1843349527, 1360839354, 2109248666 , 2147470852, 0};
     struct node* root = NULL;
-    root = insert(root, 50);
+    
+    
+    if (argc != 2)
+	{
+		printf("\nIndique el tamanio del algoritmo - Ejemplo: [user@equipo]$ %s 100\n", argv[0]);
+		exit(1);
+	}
+	
+	//Tomar el segundo argumento como tamaÃ±o del algoritmo
+	n = atoi(argv[1]);
+	numeros=(int*)malloc(n*sizeof(int));
+	arreglo=(int*)malloc(n*sizeof(int));
+	if(numeros!=NULL){
+		for(i=0;i<n;i++){//realiza las iteraciones hasta n veces ingresado como parametro del programa en la ejecucion
+			fgets (cadena,LIMITE, fichero);//lectura linea a linea del archivo txt
+			//*(numeros+i)=atoi(cadena); //asignacion de la variable temporal cadena a las posiciones del arreglo
+			root= insert(root,atoi(cadena));//llenamos el arbol con los numeros del arreglo(sin ordenar)
+		}
+	}else
+		exit(1);
+    /*root = insert(root, 50);
     insert(root, 30);
     insert(root, 20);
     insert(root, 40);
     insert(root, 70);
     insert(root, 60);
-    insert(root, 80);
+    insert(root, 80);*/
  
  	//******************************************************************
 	//Iniciar el conteo del tiempo para las evaluaciones de rendimiento
 	//******************************************************************
-	uswtime(&utime0, &stime0, &wtime0);
+	
     //******************************************************************
 	//Inicio del recorrido en orden
 	//******************************************************************
-    inorder(root,40);
+    	//inorder(root,40);
+    	for(i=0;i<20;i++){
+    		uswtime(&utime0, &stime0, &wtime0);
+    		int result = buscar(root,numerosABuscar[i]);
+    		if(result ==1){
+    		printf("El numero %d fue encontrado en el arbol\n",numerosABuscar[i]);
+    		uswtime(&utime1, &stime1, &wtime1);	
+		//Calculo del tiempo de ejecucion del programa
+		printf("\n");
+		printf("real (Tiempo total)  %.10f s\n", wtime1 - wtime0);
+		printf("user (Tiempo de procesamiento en CPU) %.10f s\n", utime1 - utime0);
+		printf("sys (Tiempo en acciÃ³nes de E/S)  %.10f s\n", stime1 - stime0);
+		printf("CPU/Wall   %.10f %% \n", 100.0 * (utime1 - utime0 + stime1 - stime0) / (wtime1 - wtime0));
+		printf("\n");
+
+			//Mostrar los tiempos en formato exponecial
+		printf("\n");
+		printf("real (Tiempo total)  %.10e s\n", wtime1 - wtime0);
+		printf("user (Tiempo de procesamiento en CPU) %.10e s\n", utime1 - utime0);
+		printf("sys (Tiempo en acciÃ³nes de E/S)  %.10e s\n", stime1 - stime0);
+		printf("CPU/Wall   %.10f %% \n", 100.0 * (utime1 - utime0 + stime1 - stime0) / (wtime1 - wtime0));
+		printf("\n\n\n");
+    		}
+    		//printf("va en %d\n",numerosABuscar[i]);
+    	}
+    	//(result == -1) ? printf("Elemento no encontrado\n"): printf("Elemento encontrado en la posicion %d\n",result);
+		
+	//}
  	//******************************************************************
 	//Fin de recorrido en orden
 	
 	//******************************************************************
 	//Evaluar los tiempos de ejecucion
 	//******************************************************************
-    uswtime(&utime1, &stime1, &wtime1);	
+    	
     return 0;
 }
